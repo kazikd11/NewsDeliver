@@ -4,13 +4,13 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.annotation.PostConstruct;
 import kazikd.dev.server.Model.City;
 import kazikd.dev.server.Repository.CitiesRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class CitiesDataLoader {
 
@@ -36,8 +36,7 @@ public class CitiesDataLoader {
 
                 citiesRepo.saveAll(cities);
 
-                System.out.println("Cities data loaded successfully: " + cities.size() + " records.");
-                //to do add logger
+                log.info("Cities data loaded successfully: {} records.", cities.size());
             }
         }
 
