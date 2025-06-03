@@ -18,6 +18,9 @@ public class City {
     @CsvBindByName(column = "state_id")
     private String state;
 
+    @CsvBindByName(column = "population")
+    private Long population;
+
     @CsvBindByName(column = "lat")
     private Double lat;
     @CsvBindByName(column = "lng")

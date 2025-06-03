@@ -1,10 +1,14 @@
 package kazikd.dev.server.Service;
 
 import kazikd.dev.server.Model.City;
+import kazikd.dev.server.Model.CityDTO;
 import kazikd.dev.server.Repository.CitiesRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CitiesService {
@@ -15,7 +19,35 @@ public class CitiesService {
         this.citiesRepo = citiesRepo;
     }
 
-    public List<City> findMatching(String namePart){
-        return citiesRepo.findTop10ByNameIgnoreCaseContaining(namePart);
+    public List<CityDTO> findMatching(String namePart){
+
+        List<City> result = new ArrayList<>(citiesRepo.findByNameIgnoreCase(namePart));
+
+        Set<Long> ids = result.stream()
+                .map(City::getId)
+                .collect(Collectors.toSet());
+
+        if(result.size()<10) {
+            for (City city : citiesRepo.findTop10ByNameStartingWithIgnoreCaseOrderByPopulationDesc(namePart)) {
+                if (ids.add(city.getId())) result.add(city);
+                if (result.size() == 10) break;
+            }
+        }
+
+        if(result.size()<10) {
+            for (City city : citiesRepo.findTop10ByNameContainingIgnoreCaseOrderByPopulationDesc(namePart)) {
+                if (ids.add(city.getId())) result.add(city);
+                if (result.size() == 10) break;
+            }
+        }
+
+        if(result.size()<10) {
+            for (City city : citiesRepo.findBySimilarity(namePart)) {
+                if (ids.add(city.getId())) result.add(city);
+                if (result.size() == 10) break;
+            }
+        }
+
+        return result.stream().map(CityDTO::fromCity).collect(Collectors.toList());
     }
 }

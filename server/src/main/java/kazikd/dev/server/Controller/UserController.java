@@ -1,6 +1,7 @@
 package kazikd.dev.server.Controller;
 
 import kazikd.dev.server.Model.City;
+import kazikd.dev.server.Model.CityDTO;
 import kazikd.dev.server.Service.CitiesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping("/cities")
-    public ResponseEntity<List<City>> getCities(@RequestParam String namePart){
-        List<City> data = citiesService.findMatching(namePart);
+    public ResponseEntity<List<CityDTO>> getCities(@RequestParam String namePart){
+        List<CityDTO> data = citiesService.findMatching(namePart);
         return ResponseEntity.ok(data);
     }
 }

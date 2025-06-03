@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS cities (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    state TEXT,
+    population BIGINT,
+    lat DOUBLE PRECISION,
+    lng DOUBLE PRECISION
+);
