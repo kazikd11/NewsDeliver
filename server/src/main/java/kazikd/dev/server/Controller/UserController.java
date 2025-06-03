@@ -1,5 +1,6 @@
 package kazikd.dev.server.Controller;
 
+import kazikd.dev.server.Model.City;
 import kazikd.dev.server.Model.CityDTO;
 import kazikd.dev.server.Service.CitiesService;
 import org.springframework.http.ResponseEntity;
