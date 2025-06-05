@@ -6,6 +6,7 @@ public record NewsDTO(
     String summary,
     String imageUrl,
     String url,
+    String publishedAt,
     CityDTO city
 ) {
     public static NewsDTO fromNews(News news) {
@@ -15,6 +16,7 @@ public record NewsDTO(
             news.getSummary(),
             news.getImageUrl(),
             news.getUrl(),
+            news.getPublishedAt().toString(),
             news.getCity() != null ? CityDTO.fromCity(news.getCity()) : null
         );
     }
