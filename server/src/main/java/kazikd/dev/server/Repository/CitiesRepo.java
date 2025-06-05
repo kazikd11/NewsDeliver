@@ -39,4 +39,7 @@ public interface CitiesRepo extends JpaRepository<City, Long> {
         LIMIT 10
         """, nativeQuery = true)
     List<City> findNearbyCities(@Param("id") Long id, @Param("lat") double lat, @Param("lng") double lng, @Param("radius") double radius);
+
+    //dev method for testing purposes
+    List<City> findTop1ByOrderByPopulation();
 }

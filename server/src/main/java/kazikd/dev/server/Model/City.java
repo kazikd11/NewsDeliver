@@ -4,6 +4,8 @@ import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "cities")
@@ -25,4 +27,8 @@ public class City {
     private Double lat;
     @CsvBindByName(column = "lng")
     private Double lng;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    private List<News> news;
+
 }

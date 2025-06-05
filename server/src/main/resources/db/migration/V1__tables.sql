@@ -6,3 +6,14 @@ CREATE TABLE IF NOT EXISTS cities (
     lat DOUBLE PRECISION,
     lng DOUBLE PRECISION
 );
+
+CREATE TABLE IF NOT EXISTS news (
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    image_url TEXT NOT NULL,
+    url TEXT NOT NULL,
+    published_at TIMESTAMPTZ NOT NULL,
+    is_global BOOLEAN NOT NULL DEFAULT FALSE,
+    city_id BIGINT REFERENCES cities(id) ON DELETE CASCADE
+);
