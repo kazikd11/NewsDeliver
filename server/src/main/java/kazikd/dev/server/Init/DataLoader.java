@@ -5,6 +5,7 @@ import jakarta.annotation.PostConstruct;
 import kazikd.dev.server.Model.City;
 import kazikd.dev.server.Repository.CitiesRepo;
 import kazikd.dev.server.Service.NewsFetchService;
+import kazikd.dev.server.Service.NewsLocationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,17 @@ public class DataLoader {
     @Value("${news.fetch.onstart}")
     private boolean fetchNewsOnStart;
 
+    @Value("${news.location.onstart}")
+    private boolean locationAnalysisOnStart;
+
     private final CitiesRepo citiesRepo;
     private final NewsFetchService newsFetchService;
+    private final NewsLocationService newsLocationService;
 
-    public DataLoader(CitiesRepo citiesRepo, NewsFetchService newsFetchService) {
+    public DataLoader(CitiesRepo citiesRepo, NewsFetchService newsFetchService, NewsLocationService newsLocationService) {
         this.citiesRepo = citiesRepo;
         this.newsFetchService = newsFetchService;
+        this.newsLocationService = newsLocationService;
     }
 
     @PostConstruct
@@ -53,6 +59,13 @@ public class DataLoader {
         if(!fetchNewsOnStart) return;
         log.info("Fetching news on application start");
         newsFetchService.fetchAndSaveNews();
+    }
+
+    @PostConstruct
+    public void debugAnalyzeLocations() {
+        if(!locationAnalysisOnStart) return;
+        log.info("Analyzing news locations on application start");
+        newsLocationService.analyzeUnassignedNews();
     }
 
 }

@@ -20,6 +20,9 @@ public interface CitiesRepo extends JpaRepository<City, Long> {
 
     Optional<City> findByNameIgnoreCaseAndState(String name, String state);
 
+    @Query(value = "SELECT * FROM cities WHERE LOWER(name) = LOWER(:name)", nativeQuery = true)
+    List<City> findExactName(@Param("name") String name);
+
     @Query(
             value = """
                     SELECT *, similarity(name, :q) * 0.8 + (population::float / (SELECT MAX(population) FROM cities)) * 0.2 AS score
