@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { KeyboardEvent } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import type { City } from '../types';
+import { API_URL } from '../config';
 
 interface SearchBarProps {
   onCitySelect: (city: City) => void;
@@ -24,7 +25,7 @@ export const SearchBar = ({ onCitySelect }: SearchBarProps) => {
 
       setIsLoading(true);
       try {
-        const response = await fetch(`http://localhost:8081/cities?namePart=${encodeURIComponent(query)}`);
+        const response = await fetch(`${API_URL}/cities?namePart=${encodeURIComponent(query)}`);
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || 'Failed to fetch cities');
         setCities(data);

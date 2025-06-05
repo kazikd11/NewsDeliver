@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { SearchBar } from './components/SearchBar';
 import { NewsCard } from './components/NewsCard';
 import type { City, News, NewsResponse } from './types';
+import { API_URL } from './config';
 
 function App() {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
@@ -12,7 +13,7 @@ function App() {
   useEffect(() => {
     const fetchGlobalNews = async () => {
       try {
-        const response = await fetch('http://localhost:8081/news/global');
+        const response = await fetch(`${API_URL}/news/global`);
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || 'Failed to fetch global news');
         setGlobalNews(data.slice(0, 9));
@@ -34,7 +35,7 @@ function App() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:8081/news/local?cityId=${selectedCity.id}`
+          `${API_URL}/news/local?cityId=${selectedCity.id}`
         );
         const data = await response.json();
         if (!response.ok) throw new Error(data.message || 'Failed to fetch local news');
