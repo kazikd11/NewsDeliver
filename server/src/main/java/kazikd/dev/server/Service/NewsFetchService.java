@@ -1,8 +1,5 @@
 package kazikd.dev.server.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import kazikd.dev.server.Model.City;
 import kazikd.dev.server.Model.News;
 import kazikd.dev.server.Model.NewsApiDTO;
@@ -11,14 +8,12 @@ import kazikd.dev.server.Repository.CitiesRepo;
 import kazikd.dev.server.Repository.NewsRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.File;
 import java.net.URI;
 import java.util.List;
 
