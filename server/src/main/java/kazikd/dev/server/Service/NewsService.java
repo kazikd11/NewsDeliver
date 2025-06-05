@@ -22,7 +22,7 @@ public class NewsService {
         this.newsRepo = newsRepo;
     }
 
-    public NewsResponseDTO getNews(Long cityId) {
+    public NewsResponseDTO getLocalAndNearbyNews(Long cityId) {
         List<NewsDTO> localNews = newsRepo.findTop10ByCityIdOrderByPublishedAtDesc(cityId)
             .stream()
             .map(NewsDTO::fromNews)
@@ -30,12 +30,14 @@ public class NewsService {
 
         List<NewsDTO> nearbyNews = findNearbyNews(cityId);
 
-        List<NewsDTO> globalNews = newsRepo.findTop10ByIsGlobalTrueOrderByPublishedAtDesc()
+        return new NewsResponseDTO(localNews, nearbyNews);
+    }
+
+    public List<NewsDTO> getGlobalNews() {
+        return newsRepo.findTop10ByIsGlobalTrueOrderByPublishedAtDesc()
             .stream()
             .map(NewsDTO::fromNews)
             .toList();
-
-        return new NewsResponseDTO(localNews, nearbyNews, globalNews);
     }
 
     private List<NewsDTO> findNearbyNews(Long cityId) {
