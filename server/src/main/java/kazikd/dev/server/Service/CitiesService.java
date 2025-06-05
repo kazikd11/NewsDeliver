@@ -21,18 +21,6 @@ public class CitiesService {
         this.citiesRepo = citiesRepo;
     }
 
-    public List<City> findNearbyCities(Long cityId, double radius) {
-        City city = citiesRepo.findById(cityId)
-                .orElseThrow(() -> {
-                            log.error("City with ID {} not found", cityId);
-                            return new IllegalArgumentException("City not found");
-                        }
-                );
-
-        return citiesRepo.findNearbyCities(cityId, city.getLat(), city.getLng(), radius * 1000)
-                .stream().filter(c -> !c.getId().equals(cityId)).collect(Collectors.toList());
-    }
-
     public List<CityDTO> findMatching(String namePart) {
 
         List<City> result = new ArrayList<>(citiesRepo.findByNameIgnoreCase(namePart));
