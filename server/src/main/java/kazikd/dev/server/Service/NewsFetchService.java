@@ -38,7 +38,7 @@ public class NewsFetchService {
     }
 
     public void fetchAndSaveNews() {
-        List<City> cities = citiesRepo.findTop1ByOrderByPopulation();
+        List<City> cities = citiesRepo.findTop10ByOrderByPopulation();
 
         for (City city : cities) {
             try{

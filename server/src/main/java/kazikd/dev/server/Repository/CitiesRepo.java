@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CitiesRepo extends JpaRepository<City, Long> {
@@ -16,6 +17,8 @@ public interface CitiesRepo extends JpaRepository<City, Long> {
     List<City> findTop10ByNameStartingWithIgnoreCaseOrderByPopulationDesc(String q);
 
     List<City> findTop10ByNameContainingIgnoreCaseOrderByPopulationDesc(String q);
+
+    Optional<City> findByNameIgnoreCaseAndState(String name, String state);
 
     @Query(
             value = """
@@ -40,6 +43,9 @@ public interface CitiesRepo extends JpaRepository<City, Long> {
         """, nativeQuery = true)
     List<City> findNearbyCities(@Param("id") Long id, @Param("lat") double lat, @Param("lng") double lng, @Param("radius") double radius);
 
+    List<City> findTop10ByOrderByPopulation();
+
     //dev method for testing purposes
     List<City> findTop1ByOrderByPopulation();
+
 }
